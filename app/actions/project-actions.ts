@@ -24,20 +24,8 @@ export async function createProjectImages(imageData: any[]) {
       return { success: true, data: [] }
     }
 
-    const { hasEnvVars } = checkEnvironmentVariables()
-
-    if (!hasEnvVars || !supabaseServer) {
-      console.log("데모 모드: 이미지 데이터 저장", imageData)
-      // 데모 모드에서는 mock 데이터 반환
-      return {
-        success: true,
-        data: imageData.map((img, index) => ({
-          id: `demo-img-${Date.now()}-${index}`,
-          ...img,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })),
-      }
+    if (!supabaseServer) {
+      return { success: false, error: "Supabase client not initialized." }
     }
 
     const { data, error } = await supabaseServer.from("website_project_images").insert(imageData).select()
@@ -102,20 +90,8 @@ export async function createHubProjectImages(imageData: any[]) {
 
     console.log("허브 이미지 저장 시작:", imageData)
 
-    const { hasEnvVars } = checkEnvironmentVariables()
-
-    if (!hasEnvVars || !supabaseServer) {
-      console.log("데모 모드: 허브 이미지 저장", imageData)
-      // 데모 모드에서는 mock 데이터 반환
-      return {
-        success: true,
-        data: imageData.map((img, index) => ({
-          id: `demo-hub-img-${Date.now()}-${index}`,
-          ...img,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })),
-      }
+    if (!supabaseServer) {
+      return { success: false, error: "Supabase client not initialized." }
     }
 
     const { data, error } = await supabaseServer.from("hub_project_images").insert(imageData).select()

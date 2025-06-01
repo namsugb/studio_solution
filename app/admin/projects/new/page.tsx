@@ -11,15 +11,8 @@ export default function ProjectTypeSelection() {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold">새 프로젝트 생성</h1>
-            <Button variant="outline" asChild>
-              <Link href="/admin/projects">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                프로젝트 목록
-              </Link>
-            </Button>
+            <h1 className="text-2xl font-bold">생성할 프로젝트 유형을 선택하세요</h1>
           </div>
-          <p className="text-gray-600">생성할 프로젝트 유형을 선택하세요</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">

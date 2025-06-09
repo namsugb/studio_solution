@@ -10,7 +10,7 @@ export default function MainPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="relative bg-rose-600 text-white">
+      <section className="relative bg-black text-white">
         <div className="container relative z-10 mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
@@ -20,14 +20,6 @@ export default function MainPage() {
               스튜디오의 작품과 서비스를 효과적으로 보여주는 전문적인 홈페이지를 제작합니다. 사진 포트폴리오와 스튜디오
               정보를 아름답게 전시할 수 있습니다.
             </p>
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button size="lg" asChild>
-                <Link href="#features">자세히 알아보기</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="bg-black/50 text-white hover:bg-black/70" asChild>
-                <Link href="/#apply">신청하기</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -38,7 +30,7 @@ export default function MainPage() {
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">메인 홈페이지 특징</h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              스튜디오의 작품과 서비스를 효과적으로 보여주는 전문적인 홈페이지의 특징을 알아보세요.
+              스튜디오의 작품과 서비스를 효과적으로 보여주는 전문적인 홈페이지 특징을 알아보세요.
             </p>
           </div>
 
@@ -78,7 +70,72 @@ export default function MainPage() {
       </section>
 
       {/* Portfolio Section */}
+
+      {/* Template Preview Section */}
       <section className="bg-gray-50 py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">스튜디오 홈페이지 템플릿</h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              스튜디오에 최적화된 홈페이지 템플릿으로 나만의 스튜디오를 멋지게 소개해보세요.
+            </p>
+          </div>
+
+          <div className="mx-auto max-w-md">
+            {/* Standard Template */}
+            <a
+              href="https://www.suncheonfamilyphoto.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block overflow-hidden rounded-lg border-2 border-rose-500 bg-white shadow-md transition-all hover:shadow-lg"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                <Image
+                  src="/image.png"
+                  alt="스튜디오 홈페이지 템플릿 미리보기"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="mb-2 text-xl font-bold text-gray-900">스튜디오 홈페이지</h3>
+                <p className="mb-4 text-gray-600">
+                  스튜디오에 최적화된 홈페이지입니다. 브랜드, 서비스, 갤러리, 문의 등 다양한 정보를 한 곳에서 고객에게 효과적으로 전달할 수 있습니다.
+                </p>
+                <div className="mb-4">
+                  <span className="text-2xl font-bold text-gray-900">₩300,000</span>
+                </div>
+                <ul className="mb-6 space-y-2 text-sm text-gray-600">
+                  <li className="flex items-center">
+                    <Check className="mr-2 h-4 w-4 text-rose-500" />
+                    <span>모바일/PC 반응형 지원</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Check className="mr-2 h-4 w-4 text-rose-500" />
+                    <span>포트폴리오 갤러리</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Check className="mr-2 h-4 w-4 text-rose-500" />
+                    <span>온라인 문의/예약 폼</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Check className="mr-2 h-4 w-4 text-rose-500" />
+                    <span>소셜 미디어 및 지도 연동</span>
+                  </li>
+                </ul>
+                <Button className="w-full" asChild>
+                  <span>
+                    템플릿 보기
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </span>
+                </Button>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">포트폴리오 갤러리</h2>
@@ -168,7 +225,7 @@ export default function MainPage() {
             </TabsContent>
           </Tabs>
         </div>
-      </section>
+      </section> */}
 
       {/* Key Components Section */}
       <section className="bg-white py-20">
@@ -188,12 +245,12 @@ export default function MainPage() {
                 image: "/component-about.png",
               },
               {
-                title: "포트폴리오 갤러리",
+                title: "갤러리",
                 description: "스튜디오의 작품을 다양한 형태로 전시하는 갤러리입니다.",
                 image: "/component-portfolio.png",
               },
               {
-                title: "서비스 및 가격",
+                title: "상품 소개",
                 description: "스튜디오에서 제공하는 서비스와 가격을 안내하는 섹션입니다.",
                 image: "/component-pricing.png",
               },
@@ -232,153 +289,6 @@ export default function MainPage() {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="bg-gray-50 py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">메인 홈페이지 가격</h2>
-            <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              합리적인 가격으로 스튜디오의 전문적인 홈페이지를 제작해 드립니다.
-            </p>
-          </div>
-
-          <div className="mx-auto max-w-5xl">
-            <div className="grid gap-8 md:grid-cols-3">
-              {/* Basic Plan */}
-              <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
-                <h3 className="mb-2 text-xl font-bold text-gray-900">베이직</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">₩599,000</span>
-                  <span className="text-gray-500"> / 1회</span>
-                </div>
-                <p className="mb-6 text-gray-600">기본적인 홈페이지를 원하는 스튜디오에 적합합니다.</p>
-                <ul className="mb-6 space-y-3">
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">5개 페이지 구성</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">반응형 디자인</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">기본 포트폴리오 갤러리</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">1개월 무료 유지보수</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">기본 SEO 설정</span>
-                  </li>
-                </ul>
-                <Button className="w-full" asChild>
-                  <Link href="/#apply">신청하기</Link>
-                </Button>
-              </div>
-
-              {/* Standard Plan */}
-              <div className="relative rounded-lg border-2 border-rose-500 bg-white p-8 shadow-md">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-rose-500 px-4 py-1 text-sm font-semibold text-white">
-                  인기 상품
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900">스탠다드</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">₩999,000</span>
-                  <span className="text-gray-500"> / 1회</span>
-                </div>
-                <p className="mb-6 text-gray-600">대부분의 스튜디오에 적합한 표준 홈페이지입니다.</p>
-                <ul className="mb-6 space-y-3">
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">10개 페이지 구성</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">반응형 디자인</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">고급 포트폴리오 갤러리</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">3개월 무료 유지보수</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">고급 SEO 최적화</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">기본 예약 시스템</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">소셜 미디어 통합</span>
-                  </li>
-                </ul>
-                <Button className="w-full" asChild>
-                  <Link href="/#apply">신청하기</Link>
-                </Button>
-              </div>
-
-              {/* Premium Plan */}
-              <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
-                <h3 className="mb-2 text-xl font-bold text-gray-900">프리미엄</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">₩1,499,000</span>
-                  <span className="text-gray-500"> / 1회</span>
-                </div>
-                <p className="mb-6 text-gray-600">고급 기능이 필요한 전문 스튜디오에 적합합니다.</p>
-                <ul className="mb-6 space-y-3">
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">무제한 페이지 구성</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">반응형 디자인</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">맞춤형 포트폴리오 갤러리</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">6개월 무료 유지보수</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">전문 SEO 최적화</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">고급 예약 시스템</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">소셜 미디어 통합</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">고객 관리 시스템</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="mr-2 h-5 w-5 text-rose-500" />
-                    <span className="text-gray-600">결제 시스템 연동</span>
-                  </li>
-                </ul>
-                <Button className="w-full" asChild>
-                  <Link href="/#apply">신청하기</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="bg-white py-20">
@@ -393,22 +303,22 @@ export default function MainPage() {
               <AccordionItem value="item-1">
                 <AccordionTrigger>홈페이지 제작 기간은 얼마나 걸리나요?</AccordionTrigger>
                 <AccordionContent>
-                  기본적인 홈페이지는 약 3~4주 내에 완성됩니다. 복잡한 기능이나 맞춤형 디자인이 필요한 경우 6~8주 정도
+                  기본적인 홈페이지는 약 2~3주 내에 완성됩니다. 복잡한 기능이나 맞춤형 디자인이 필요한 경우 4~5주 정도
                   소요될 수 있습니다. 정확한 일정은 상담 후 결정됩니다.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>홈페이지 콘텐츠는 어떻게 준비해야 하나요?</AccordionTrigger>
                 <AccordionContent>
-                  기본적인 텍스트 콘텐츠(소개, 서비스 설명 등)와 고품질 이미지를 준비해 주시면 됩니다. 필요한 경우
-                  콘텐츠 작성 및 사진 촬영 서비스도 제공해 드립니다(별도 비용 발생).
+                  기본적인 텍스트 콘텐츠(소개, 서비스 설명 등)와 이미지를 제작 사이트에 업로드 해주시면 됩니다.
+                  복잡하게 카톡으로 여러번 소통하지 않고 한번에 끝내세요.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>홈페이지를 직접 수정할 수 있나요?</AccordionTrigger>
                 <AccordionContent>
-                  네, 관리자 페이지를 통해 텍스트, 이미지, 갤러리 등을 직접 수정할 수 있습니다. 사용법에 대한 교육도
-                  제공해 드립니다. 더 복잡한 수정은 유지보수 서비스를 통해 지원해 드립니다.
+                  페이지 제작시 제공해주시는 정보(로고, 이미지, 링크, 텍스트, 메인 컬러)를 바탕으로 제작되며 이후 자체 수정은 불가능합니다.
+                  분기에 한번 무료로 이미지 교체가 가능하며, 별도의 수정은 추가비용 발생합니다.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">

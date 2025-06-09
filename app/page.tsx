@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Camera, Link2, Instagram } from "lucide-react"
+import { ArrowRight, Camera, Link2, Instagram, Layout, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 // InquiryForm 컴포넌트 import 추가
 import { InquiryForm } from "@/components/inquiry-form"
@@ -22,14 +22,6 @@ export default function Home() {
               스튜디오와 사진작가를 위한 맞춤형 웹 솔루션을 제공합니다. 고객들에게 더 효과적으로 다가갈 수 있는 디지털
               공간을 만들어 드립니다.
             </p>
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button size="lg" asChild>
-                <Link href="#services">서비스 알아보기</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="bg-black/50 text-white hover:bg-black/70" asChild>
-                <Link href="#apply">신청하기</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -40,11 +32,11 @@ export default function Home() {
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">주요 서비스</h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              스튜디오와 사진작가를 위한 두 가지 핵심 웹 솔루션을 제공합니다.
+              스튜디오와 사진작가를 위한 다양한 웹 솔루션을 제공합니다.
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {/* Hub Page Service */}
             <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
@@ -70,7 +62,7 @@ export default function Home() {
                 </li>
               </ul>
               <Image
-                src="/link-hub-social-icons.png"
+                src="/hub_image.png"
                 alt="허브 페이지 예시"
                 width={500}
                 height={300}
@@ -111,7 +103,7 @@ export default function Home() {
                 </li>
               </ul>
               <Image
-                src="/photography-portfolio-website.png"
+                src="/homepage_image.png"
                 alt="메인 홈페이지 예시"
                 width={500}
                 height={300}
@@ -120,6 +112,86 @@ export default function Home() {
               <div className="mt-4">
                 <Button asChild>
                   <Link href="/main-page">
+                    자세히 알아보기
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Admin Page Service */}
+            <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+                <Layout className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">관리자 페이지</h3>
+              <p className="mb-4 text-gray-600">
+                홈페이지와 허브페이지의 콘텐츠, 예약, 고객 관리 등 다양한 기능을 한 곳에서 손쉽게 관리할 수 있는 관리자 페이지를 제공합니다.
+              </p>
+              <ul className="mb-6 space-y-2 text-gray-600">
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  콘텐츠 관리(텍스트, 이미지 등)
+                </li>
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  예약 관리 및 확인
+                </li>
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  고객 문의 및 후기 관리
+                </li>
+              </ul>
+              <Image
+                src="/admin_image.png"
+                alt="관리자 페이지 예시"
+                width={500}
+                height={300}
+                className="rounded-lg object-cover"
+              />
+              <div className="mt-4">
+                <Button asChild>
+                  <Link href="/manage">
+                    자세히 알아보기
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Event Page Service */}
+            <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+                <Gift className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">이벤트 페이지</h3>
+              <p className="mb-4 text-gray-600">
+                다양한 이벤트와 프로모션을 손쉽게 등록하고, 고객 참여와 결과 발표까지 한 번에 관리할 수 있는 이벤트 페이지를 제공합니다.
+              </p>
+              <ul className="mb-6 space-y-2 text-gray-600">
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  이벤트/프로모션 등록
+                </li>
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  이벤트 결과 발표
+                </li>
+                <li className="flex items-center">
+                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
+                  고객 참여 관리
+                </li>
+              </ul>
+              <Image
+                src="/event_image.png"
+                alt="이벤트 페이지 예시"
+                width={500}
+                height={300}
+                className="rounded-lg object-cover"
+              />
+              <div className="mt-4">
+                <Button asChild>
+                  <Link href="/event-page">
                     자세히 알아보기
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -135,8 +207,8 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <div className="mb-10 text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">웹페이지 제작 신청</h2>
-              <p className="text-lg text-gray-600">아래 양식을 작성하여 스튜디오 웹페이지 제작을 신청해 주세요.</p>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">스튜디오 웹 솔루션 제작 신청</h2>
+              <p className="text-lg text-gray-600">아래 양식을 작성하여 스튜디오 웹 솔루션 제작을 신청해 주세요.</p>
             </div>
 
             <InquiryForm />

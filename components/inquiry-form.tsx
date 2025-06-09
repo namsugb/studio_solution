@@ -86,7 +86,7 @@ export function InquiryForm() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="허브 페이지">허브 페이지</SelectItem>
-                <SelectItem value="스튜디오 예약">스튜디오 예약</SelectItem>
+                <SelectItem value="스튜디오 예약">메인 홈페이지</SelectItem>
                 <SelectItem value="기타">기타</SelectItem>
               </SelectContent>
             </Select>
@@ -99,11 +99,10 @@ export function InquiryForm() {
 
           {message && (
             <div
-              className={`p-3 rounded-md ${
-                message.type === "success"
+              className={`p-3 rounded-md ${message.type === "success"
                   ? "bg-green-50 text-green-700 border border-green-200"
                   : "bg-red-50 text-red-700 border border-red-200"
-              }`}
+                }`}
             >
               {message.text}
             </div>

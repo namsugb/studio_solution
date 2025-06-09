@@ -18,11 +18,6 @@ export default function HubPage() {
               모든 온라인 채널을 한 곳에 모아 고객들이 쉽게 접근할 수 있는 링크 허브 페이지를 제작해 드립니다. 블로그,
               인스타그램, 홈페이지 등 스튜디오의 모든 온라인 채널을 한 곳에서 관리하세요.
             </p>
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button size="lg" asChild>
-                <Link href="#features">자세히 알아보기</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -45,7 +40,7 @@ export default function HubPage() {
               </div>
               <h3 className="mb-3 text-xl font-bold text-gray-900">모든 링크 통합</h3>
               <p className="text-gray-600">
-                블로그, 인스타그램, 홈페이지, 유튜브, 카카오톡 등 스튜디오의 모든 온라인 채널을 한 곳에 모아 고객들이
+                블로그, 인스타그램, 홈페이지, 네이버, 카카오톡 등 스튜디오의 모든 온라인 채널을 한 곳에 모아 고객들이
                 쉽게 접근할 수 있습니다.
               </p>
             </div>
@@ -64,10 +59,9 @@ export default function HubPage() {
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
                 <Instagram className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-bold text-gray-900">SNS 통합</h3>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">네이버 검색순위 상승</h3>
               <p className="text-gray-600">
-                인스타그램, 페이스북, 유튜브 등 다양한 SNS 채널을 통합하여 고객들이 원하는 채널로 쉽게 이동할 수
-                있습니다.
+                네이버 링크들을 노출시켜 홈페이지, 블로그들의 검색 순위를 높이는데 도움이 됩니다.
               </p>
             </div>
           </div>
@@ -152,7 +146,7 @@ export default function HubPage() {
               <AccordionItem value="item-1">
                 <AccordionTrigger>허브 페이지란 무엇인가요?</AccordionTrigger>
                 <AccordionContent>
-                  허브 페이지는 스튜디오의 모든 온라인 채널(블로그, 인스타그램, 홈페이지, 유튜브 등)을 한 곳에 모아
+                  허브 페이지는 스튜디오의 모든 온라인 채널(블로그, 인스타그램, 홈페이지 등)을 한 곳에 모아
                   고객들이 쉽게 접근할 수 있도록 하는 페이지입니다. 하나의 URL로 모든 채널에 접근할 수 있어 명함이나
                   홍보물에 여러 링크를 나열할 필요가 없습니다.
                 </AccordionContent>
@@ -167,22 +161,20 @@ export default function HubPage() {
               <AccordionItem value="item-3">
                 <AccordionTrigger>허브 페이지를 직접 수정할 수 있나요?</AccordionTrigger>
                 <AccordionContent>
-                  네, 관리자 페이지를 통해 링크를 추가하거나 수정할 수 있습니다. 기본적인 디자인 요소(색상, 로고 등)도
-                  직접 변경 가능합니다. 더 복잡한 수정은 유지보수 서비스를 통해 지원해 드립니다.
+                  네, 페이지 제작시 제공해주시는 정보(로고, 이미지, 링크, 텍스트, 메인 컬러)를 바탕으로 제작됩니다.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
                 <AccordionTrigger>유지보수 비용은 얼마인가요?</AccordionTrigger>
                 <AccordionContent>
-                  무료 유지보수 기간 이후에는 월 30,000원부터 시작하는 유지보수 플랜을 제공합니다. 유지보수에는 호스팅
-                  비용, 보안 업데이트, 기술 지원 등이 포함됩니다. 자세한 내용은 상담을 통해 안내해 드립니다.
+                  이미지 교체, 링크 교체와 같은 간단한 수정은 무료로 지원합니다. 복잡한 수정은 유지보수 서비스를 통해 지원해 드립니다.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
                 <AccordionTrigger>도메인은 어떻게 설정하나요?</AccordionTrigger>
                 <AccordionContent>
                   기존에 보유하신 도메인이 있다면 그대로 사용 가능합니다. 도메인이 없으신 경우, 저희가 도메인 구매 및
-                  설정을 도와드립니다(별도 비용 발생). 또는 저희가 제공하는 서브도메인을 무료로 사용하실 수도 있습니다.
+                  설정을 도와드립니다(별도 비용 발생).
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

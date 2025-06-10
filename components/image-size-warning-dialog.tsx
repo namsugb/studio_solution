@@ -46,8 +46,7 @@ export function ImageSizeWarningDialog({
         <DialogHeader>
           <DialogTitle>큰 이미지 파일 감지됨</DialogTitle>
           <DialogDescription>
-            {imageCount}개의 이미지 파일({formatFileSize(totalSize)})이 2MB보다 큽니다. 이미지를 압축하여 업로드 속도를
-            향상시키고 저장 공간을 절약할 수 있습니다.
+            {imageCount}개의 이미지 파일({formatFileSize(totalSize)})이 2MB보다 큽니다. 큰 이미지는 브라우저에서 검색에 안좋은 영향을 줄 수 있습니다.
           </DialogDescription>
         </DialogHeader>
 

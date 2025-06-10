@@ -228,7 +228,7 @@ export default function MainPage() {
       </section> */}
 
       {/* Key Components Section */}
-      <section className="bg-white py-20">
+      {/* <section className="bg-white py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">주요 구성 요소</h2>
@@ -287,7 +287,7 @@ export default function MainPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       {/* FAQ Section */}

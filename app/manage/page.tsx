@@ -15,7 +15,7 @@ export default function ReservationManagePage() {
                             스튜디오 <span className="text-rose-400">예약·문의 관리</span>
                         </h1>
                         <p className="mb-8 text-lg text-gray-200 sm:text-xl">
-                            고객의 예약신청, 문의, 상담 요청 등 모든 정보를 한 곳에서 체계적으로 관리할 수 있는 전용 관리 페이지입니다. 예약 현황, 문의 내역, 고객 정보까지 한눈에 확인하고, 효율적으로 스튜디오를 운영하세요.
+                            고객의 예약신청, 문의 요청 등 모든 정보를 한 곳에서 체계적으로 관리할 수 있는 전용 관리 페이지입니다. 예약 현황, 문의 내역, 고객 정보까지 한눈에 확인하고, 효율적으로 스튜디오를 운영하세요.
                         </p>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ export default function ReservationManagePage() {
                     <div className="mb-16 text-center">
                         <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">예약·문의 관리 주요 기능</h2>
                         <p className="mx-auto max-w-2xl text-lg text-gray-600">
-                            고객의 예약신청, 문의, 상담 요청을 쉽고 빠르게 관리할 수 있는 다양한 기능을 제공합니다.
+                            고객의 예약신청, 문의 요청을 쉽고 빠르게 관리할 수 있는 다양한 기능을 제공합니다.
                         </p>
                     </div>
 
@@ -79,7 +79,7 @@ export default function ReservationManagePage() {
                         <div className="block overflow-hidden rounded-lg border-2 border-rose-500 bg-white shadow-md transition-all hover:shadow-lg">
                             <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
                                 <Image
-                                    src="/reservation_manage_preview.png"
+                                    src="/admin_image.png"
                                     alt="예약·문의 관리 페이지 미리보기"
                                     fill
                                     className="object-cover object-top"
@@ -111,12 +111,14 @@ export default function ReservationManagePage() {
                                         <span>엑셀 다운로드 및 데이터 백업</span>
                                     </li>
                                 </ul>
-                                <Button className="w-full" asChild>
-                                    <span>
-                                        자세히 보기
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </span>
-                                </Button>
+                                <Link href="/#apply">
+                                    <Button className="w-full" asChild>
+                                        <span>
+                                            자세히 보기
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </span>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                     </div>

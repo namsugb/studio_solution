@@ -569,8 +569,7 @@ export default function NewHubProjectPage() {
             <div>
               <Label>로고 이미지</Label>
               <p className="text-sm text-gray-500 mb-4">
-                허브 페이지에 표시될 스튜디오 로고를 업로드해주세요 (권장: 정사각형 또는 가로형, PNG/JPG, 투명 배경
-                권장)
+                허브 페이지에 표시될 스튜디오 로고를 업로드해주세요 (권장: 정사각형 생략 가능)
               </p>
               <input
                 type="file"
@@ -615,7 +614,7 @@ export default function NewHubProjectPage() {
             <div>
               <Label>슬라이더 이미지</Label>
               <p className="text-sm text-gray-500 mb-4">
-                허브 페이지 상단에 표시될 슬라이더 이미지들을 업로드해주세요 (권장: 가로 16:9 비율, 고해상도)
+                허브 페이지 상단에 표시될 슬라이더 이미지들을 업로드해주세요 (권장: 가로 16:9 비율)
               </p>
               <input
                 type="file"
@@ -748,7 +747,6 @@ export default function NewHubProjectPage() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <Check className="mx-auto h-16 w-16 text-green-500 mb-4" />
               <h3 className="text-lg font-semibold mb-2">정보 입력이 완료되었습니다!</h3>
               <p className="text-gray-600">입력하신 정보를 검토한 후 제출해주세요.</p>
             </div>

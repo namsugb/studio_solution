@@ -126,20 +126,20 @@ export default function Home() {
               </div>
               <h3 className="mb-3 text-xl font-bold text-gray-900">관리자 페이지</h3>
               <p className="mb-4 text-gray-600">
-                홈페이지와 허브페이지의 콘텐츠, 예약, 고객 관리 등 다양한 기능을 한 곳에서 손쉽게 관리할 수 있는 관리자 페이지를 제공합니다.
+                홈페이지, 이벤트페이지, 허브페이지등 다양한 경로로 부터 들어오는 예약문의를 확인하고 관리할 수 있습니다.
               </p>
               <ul className="mb-6 space-y-2 text-gray-600">
                 <li className="flex items-center">
                   <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  콘텐츠 관리(텍스트, 이미지 등)
+                  예약 문의하신 고객 관리를 통해 촬영확정 전환율을 높일 수 있습니다.
                 </li>
                 <li className="flex items-center">
                   <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  예약 관리 및 확인
+                  모바일 최적화 ui로 모바일에서도 실시간으로 예약문의를 확인할 수 있습니다.
                 </li>
                 <li className="flex items-center">
                   <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  고객 문의 및 후기 관리
+                  다양한 경로로 오는 예약 문의를 한 곳에서 확인할 수 있습니다.
                 </li>
               </ul>
               <Image
@@ -166,20 +166,16 @@ export default function Home() {
               </div>
               <h3 className="mb-3 text-xl font-bold text-gray-900">이벤트 페이지</h3>
               <p className="mb-4 text-gray-600">
-                다양한 이벤트와 프로모션을 손쉽게 등록하고, 고객 참여와 결과 발표까지 한 번에 관리할 수 있는 이벤트 페이지를 제공합니다.
+                스튜디오의 이벤트 상품을 홍보하고 예약문의를 받을 수 있는 이벤트 페이지를 제공합니다.
               </p>
               <ul className="mb-6 space-y-2 text-gray-600">
                 <li className="flex items-center">
                   <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  이벤트/프로모션 등록
+                  이벤트 상품 홍보
                 </li>
                 <li className="flex items-center">
                   <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  이벤트 결과 발표
-                </li>
-                <li className="flex items-center">
-                  <ArrowRight className="mr-2 h-4 w-4 text-rose-500" />
-                  고객 참여 관리
+                  예약 정보 관리
                 </li>
               </ul>
               <Image

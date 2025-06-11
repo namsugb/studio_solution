@@ -22,6 +22,7 @@ interface LinkInfo {
   name: string
   url: string
   icon?: string
+  category: "header" | "floating" | "main"
 }
 
 // 이미지 파일 타입
@@ -127,12 +128,13 @@ export default function NewHubProjectPage() {
       id: Date.now().toString(),
       name: "",
       url: "",
+      category: "header",
     }
     setProjectInfo({ ...projectInfo, links: [...projectInfo.links, newLink] })
   }
 
   // 링크 업데이트
-  const updateLink = (linkId: string, field: "name" | "url", value: string) => {
+  const updateLink = (linkId: string, field: "name" | "url" | "category", value: string) => {
     setProjectInfo({
       ...projectInfo,
       links: projectInfo.links.map((link) => (link.id === linkId ? { ...link, [field]: value } : link)),
@@ -406,6 +408,7 @@ export default function NewHubProjectPage() {
           name: link.name,
           url: link.url,
           icon: link.icon || null,
+          category: link.category,
           sort_order: index,
         }))
 
@@ -683,12 +686,44 @@ export default function NewHubProjectPage() {
       case 5:
         return (
           <div className="space-y-6">
+            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+              <div className="font-semibold mb-2">링크 위치 안내</div>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>
+                  <b>헤더</b>: 페이지 상단(로고 옆)에 노출됩니다. 예시: <span className="font-mono">Blog, Instagram</span>
+                </li>
+                <li>
+                  <b>플로팅버튼</b>: 이미지 오른쪽에 동그란 버튼 형태로 고정 노출됩니다. 예시: <span className="font-mono">전화, 톡톡, 카카오</span>
+                </li>
+                <li>
+                  <b>메인</b>: 이미지 아래 주요 버튼 영역에 노출됩니다. 예시: <span className="font-mono">이달의 이벤트, 의상정보, 리뷰, 네이버 예약, 홈페이지, 오시는 길</span>
+                </li>
+              </ul>
+              <div className="mt-2">
+                <img src="/image.png" alt="위치 안내 예시" className="rounded border w-full max-w-xs mx-auto" />
+                <div className="text-xs text-gray-500 text-center mt-1">* 실제 화면 예시</div>
+              </div>
+            </div>
             <div className="text-sm text-gray-600 mb-4">
-              허브 페이지에 표시할 소셜 미디어 링크나 웹사이트 링크를 추가해주세요.
+              허브 페이지에 표시할 소셜 미디어 링크나 웹사이트 링크를 추가해주세요.<br />
+              <span className="text-xs text-gray-400">카테고리를 선택해 링크를 구분할 수 있습니다.</span>
             </div>
             {projectInfo.links.map((link) => (
               <div key={link.id} className="space-y-4 p-4 border rounded-lg">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                  <div>
+                    <Label htmlFor={`linkCategory-${link.id}`}>위치</Label>
+                    <select
+                      id={`linkCategory-${link.id}`}
+                      value={link.category}
+                      onChange={(e) => updateLink(link.id, "category", e.target.value)}
+                      className="w-full rounded border p-2"
+                    >
+                      <option value="header">헤더</option>
+                      <option value="floating">플로팅버튼</option>
+                      <option value="main">메인</option>
+                    </select>
+                  </div>
                   <div>
                     <Label htmlFor={`linkName-${link.id}`}>링크 이름</Label>
                     <Input
@@ -709,16 +744,17 @@ export default function NewHubProjectPage() {
                       className="w-full"
                     />
                   </div>
+                  <div className="flex justify-end items-end h-full">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeLink(link.id)}
+                      className="text-red-500 hover:text-red-700 h-8 w-8 p-0 flex items-center justify-center rounded-full"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => removeLink(link.id)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  링크 삭제
-                </Button>
               </div>
             ))}
             <Button onClick={addLink} variant="outline" className="w-full">

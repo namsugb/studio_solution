@@ -79,6 +79,37 @@ export default function ProjectTypeSelection() {
               </Button>
             </CardFooter>
           </Card>
+
+          {/* 이벤트 페이지 카드 */}
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle>이벤트 페이지</CardTitle>
+              <CardDescription>
+                특정 이벤트(예: 프로모션, 시즌 행사 등)를 위한 맞춤형 랜딩 페이지를 생성합니다. 고객이 직접 신청할 수 있는 폼과 상세 이미지를 포함할 수 있습니다.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-start">
+                  <div className="mr-2">✓</div>
+                  <div>이벤트별 상세 이미지 업로드</div>
+                </div>
+                <div className="flex items-start">
+                  <div className="mr-2">✓</div>
+                  <div>고객 신청 폼(이름, 전화번호, 촬영종류, 날짜, 인원수 등)</div>
+                </div>
+                <div className="flex items-start">
+                  <div className="mr-2">✓</div>
+                  <div>신청 내역 관리</div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" asChild>
+                <Link href="/admin/projects/new/event">이벤트 페이지 생성하기</Link>
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </div>

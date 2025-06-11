@@ -79,7 +79,7 @@ export default function EventPage() {
                         <div className="block overflow-hidden rounded-lg border-2 border-rose-500 bg-white shadow-md transition-all hover:shadow-lg">
                             <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
                                 <Image
-                                    src="/event_page_preview.png"
+                                    src="/event_image.png"
                                     alt="이벤트 예약 페이지 미리보기"
                                     fill
                                     className="object-cover object-top"
@@ -111,12 +111,14 @@ export default function EventPage() {
                                         <span>엑셀 다운로드 지원</span>
                                     </li>
                                 </ul>
-                                <Button className="w-full" asChild>
-                                    <span>
-                                        자세히 보기
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </span>
-                                </Button>
+                                <a href="https://v0-single-event-page-maker.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                    <Button className="w-full" asChild>
+                                        <span>
+                                            자세히 보기
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </span>
+                                    </Button>
+                                </a>
                             </div>
                         </div>
                     </div>

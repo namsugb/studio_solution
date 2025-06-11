@@ -223,35 +223,87 @@ export default function Home() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-                <div className="mb-4 flex items-center">
-                  <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-gray-200">
-                    <Image
-                      src={`/portrait-photo.png?height=48&width=48&query=portrait photo ${i}`}
-                      alt="Customer"
-                      width={48}
-                      height={48}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">스튜디오 {i}</h4>
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, j) => (
-                        <svg key={j} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
+            {/* 후기 1 */}
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-gray-200">
+                  <Image
+                    src="/portrait-photo.png?height=48&width=48&query=portrait photo 1"
+                    alt="Customer"
+                    width={48}
+                    height={48}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900">아침햇살 스튜디오</h4>
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
                   </div>
                 </div>
-                <p className="text-gray-600">
-                  "웹페이지 제작 후 온라인 예약이 30% 증가했습니다. 고객들이 저희 작품을 더 쉽게 볼 수 있게 되었고, SNS
-                  채널도 한 곳에서 관리할 수 있어 매우 편리합니다."
-                </p>
               </div>
-            ))}
+              <p className="text-gray-600">
+                "홈페이지 리뉴얼 후 고객 문의가 눈에 띄게 늘었어요! 특히 모바일에서도 너무 예쁘게 잘 보여서, 젊은 고객층에게도 반응이 좋습니다. 예약 관리도 훨씬 편해졌고, 무엇보다 저희만의 감성을 잘 살려주셔서 정말 만족합니다."
+              </p>
+            </div>
+            {/* 후기 2 */}
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-gray-200">
+                  <Image
+                    src="/portrait-photo.png?height=48&width=48&query=portrait photo 2"
+                    alt="Customer"
+                    width={48}
+                    height={48}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900">포토앤유</h4>
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-600">
+                "저희는 SNS 채널이 많아서 관리가 힘들었는데, 허브 페이지 덕분에 고객들이 한 번에 원하는 곳으로 이동할 수 있어 정말 편리해졌어요. 문의도 한 곳으로 모여서 응대가 훨씬 수월해졌습니다. 적극 추천합니다!"
+              </p>
+            </div>
+            {/* 후기 3 */}
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-gray-200">
+                  <Image
+                    src="/portrait-photo.png?height=48&width=48&query=portrait photo 3"
+                    alt="Customer"
+                    width={48}
+                    height={48}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900">스튜디오 봄날</h4>
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-600">
+                "처음엔 홈페이지가 필요할까 고민했는데, 막상 만들고 나니 고객 응대가 훨씬 체계적으로 바뀌었어요. 특히 예약 시스템이 자동화되어 시간도 절약되고, 고객분들도 만족도가 높아졌습니다. 덕분에 저희 스튜디오가 한 단계 성장한 느낌이에요!"
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -266,8 +318,8 @@ export default function Home() {
             </div>
             <div>
               <h4 className="mb-4 text-lg font-medium">연락처</h4>
-              <p className="mb-2 text-gray-400">이메일: contact@studio-web.com</p>
-              <p className="mb-2 text-gray-400">전화: 02-123-4567</p>
+              <p className="mb-2 text-gray-400">이메일: namsugb@naver.com</p>
+              <p className="mb-2 text-gray-400">전화: 010-3941-2259</p>
               <div className="mt-4 flex space-x-4">
                 <a href="#" className="text-gray-400 hover:text-white">
                   <Instagram className="h-5 w-5" />
@@ -290,11 +342,6 @@ export default function Home() {
                 <li>
                   <Link href="#apply" className="hover:text-white">
                     신청하기
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    개인정보처리방침
                   </Link>
                 </li>
               </ul>

@@ -52,8 +52,8 @@ const initialProjectInfo: WebsiteProjectFormData = {
   email: "",
   address: "",
   business_hours: "",
-  primary_color: "#f43f5e",
-  secondary_color: "#64748b",
+  primary_color: "#ffffff",
+  secondary_color: "#f5e9da",
   font_preference: "modern",
   gallery_categories: [],
   product_categories: [],
@@ -70,7 +70,7 @@ const steps = [
   { id: 3, title: "브랜딩", description: "색상, 폰트 등 브랜딩 정보를 설정해주세요" },
   { id: 4, title: "이미지 업로드", description: "로고, 슬라이더, 상품소개, 갤러리 이미지를 업로드해주세요" },
   { id: 5, title: "카테고리 설정", description: "갤러리와 상품 카테고리를 설정해주세요" },
-  { id: 6, title: "기능 & 요구사항", description: "필요한 기능과 특별 요청사항을 선택해주세요" },
+  { id: 6, title: "기타 요구사항", description: "" },
   { id: 7, title: "완료", description: "입력한 정보를 확인하고 제출해주세요" },
 ]
 
@@ -171,7 +171,7 @@ export default function NewWebsiteProjectPage() {
   }
 
   const handleGalleryInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
+    if (e.key === "Enter") {
       e.preventDefault()
       addGalleryCategory(galleryInput)
       setGalleryInput("")
@@ -179,7 +179,7 @@ export default function NewWebsiteProjectPage() {
   }
 
   const handleProductInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
+    if (e.key === "Enter") {
       e.preventDefault()
       addProductCategory(productInput)
       setProductInput("")
@@ -388,7 +388,8 @@ export default function NewWebsiteProjectPage() {
         throw new Error(result.error)
       }
 
-      const projectId = result.data[0].id
+      const projectId = result.data?.[0]?.id
+      if (!projectId) throw new Error("프로젝트 ID를 가져올 수 없습니다.")
 
       if (projectInfo.images.length > 0) {
         try {
@@ -453,7 +454,7 @@ export default function NewWebsiteProjectPage() {
                 id="description"
                 value={projectInfo.description}
                 onChange={(e) => setProjectInfo({ ...projectInfo, description: e.target.value })}
-                placeholder="스튜디오에 대한 간단한 소개를 작성해주세요"
+                placeholder="스튜디오와 작가에 대한 소개를 작성해주세요"
                 rows={4}
               />
             </div>
@@ -511,7 +512,7 @@ export default function NewWebsiteProjectPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="primaryColor">메인 컬러</Label>
+                <Label htmlFor="primaryColor">배경 컬러</Label>
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
@@ -523,12 +524,12 @@ export default function NewWebsiteProjectPage() {
                   <Input
                     value={projectInfo.primary_color}
                     onChange={(e) => setProjectInfo({ ...projectInfo, primary_color: e.target.value })}
-                    placeholder="#f43f5e"
+                    placeholder="#ffffff"
                   />
                 </div>
               </div>
               <div>
-                <Label htmlFor="secondaryColor">서브 컬러</Label>
+                <Label htmlFor="secondaryColor">포인트 컬러</Label>
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
@@ -540,7 +541,7 @@ export default function NewWebsiteProjectPage() {
                   <Input
                     value={projectInfo.secondary_color}
                     onChange={(e) => setProjectInfo({ ...projectInfo, secondary_color: e.target.value })}
-                    placeholder="#64748b"
+                    placeholder="#f5e9da"
                   />
                 </div>
               </div>
@@ -795,10 +796,10 @@ export default function NewWebsiteProjectPage() {
             <div>
               <Label htmlFor="galleryInput">갤러리 카테고리</Label>
               <p className="text-sm text-gray-500 mb-4">
-                포트폴리오 갤러리에서 사용할 카테고리를 입력해주세요. 엔터키나 쉼표(,)로 카테고리를 추가할 수 있습니다.
+                갤러리에서 사용할 카테고리를 입력해주세요. 엔터키로 카테고리를 추가할 수 있습니다.
               </p>
               <p className="text-xs text-gray-400 mb-2">
-                예시: 웨딩 촬영, 가족 촬영, 프로필 촬영, 상품 촬영, 이벤트 촬영
+                예시: 가족사진, 리마인드, 증명사진, 프로필사진
               </p>
               <Input
                 id="galleryInput"
@@ -830,12 +831,12 @@ export default function NewWebsiteProjectPage() {
             </div>
 
             <div>
-              <Label htmlFor="productInput">상품 카테고리</Label>
+              <Label htmlFor="productInput">상품 정보</Label>
               <p className="text-sm text-gray-500 mb-4">
-                제공하는 상품/서비스 카테고리를 입력해주세요. 엔터키나 쉼표(,)로 카테고리를 추가할 수 있습니다.
+                제공하는 상품/서비스 정보를 입력해주세요. 엔터키로 카테고리를 추가할 수 있습니다.
               </p>
               <p className="text-xs text-gray-400 mb-2">
-                예시: 촬영 패키지, 스튜디오 대여, 사진 편집, 영상 제작, 앨범 제작
+                예시: 소가족/99,000원/28cm x 36cm 액자 1개, ...
               </p>
               <Input
                 id="productInput"
@@ -871,7 +872,7 @@ export default function NewWebsiteProjectPage() {
       case 6:
         return (
           <div className="space-y-6">
-            <div>
+            {/* <div>
               <Label>필요한 기능</Label>
               <p className="text-sm text-gray-500 mb-4">웹사이트에 포함하고 싶은 기능들을 선택해주세요</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -918,7 +919,7 @@ export default function NewWebsiteProjectPage() {
                   onChange={(e) => setProjectInfo({ ...projectInfo, deadline: e.target.value })}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div>
               <Label htmlFor="specialRequests">특별 요청사항</Label>
@@ -1001,11 +1002,14 @@ export default function NewWebsiteProjectPage() {
     <>
       {largeImages.length > 0 && (
         <ImageSizeWarningDialog
-          isOpen={isWarningDialogOpen}
+          open={isWarningDialogOpen}
           onClose={handleCancelLargeImages}
-          onConfirm={handleConfirmLargeImages}
-          largeImages={largeImages}
-          maxSizeInMB={MAX_IMAGE_SIZE_MB}
+          onCompress={() => handleConfirmLargeImages(largeImages)}
+          onUseOriginal={handleCancelLargeImages}
+          isCompressing={false}
+          compressionProgress={0}
+          imageCount={largeImages.length}
+          totalSize={largeImages.reduce((sum, img) => sum + img.file.size, 0)}
         />
       )}
       <div className="min-h-screen bg-gray-50 py-8">

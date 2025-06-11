@@ -972,9 +972,6 @@ export default function NewWebsiteProjectPage() {
                 <div>
                   <strong>상품 카테고리:</strong> {projectInfo.product_categories.length}개 선택
                 </div>
-                <div>
-                  <strong>예산:</strong> {projectInfo.budget || "미선택"}
-                </div>
               </CardContent>
             </Card>
 

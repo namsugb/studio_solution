@@ -148,3 +148,28 @@ export async function createHubProjectLinks(linkData: any[]) {
     return { success: false, error: error.message || "알 수 없는 오류가 발생했습니다." }
   }
 }
+
+// 이벤트 페이지 생성 서버 액션
+export async function createEventPage(eventData: {
+  studio_name: string
+  studio_location: string
+  studio_contact: string
+  image_url: string
+  fields_to_ask: string[]
+  product_list: string[]
+}) {
+  try {
+    if (!supabaseServer) {
+      return { success: false, error: "Supabase client not initialized." }
+    }
+    const { data, error } = await supabaseServer.from("event_pages").insert([eventData]).select()
+    if (error) {
+      console.error("이벤트 페이지 생성 오류:", error)
+      return { success: false, error: error.message }
+    }
+    return { success: true, data }
+  } catch (error: any) {
+    console.error("이벤트 페이지 서버 액션 오류:", error)
+    return { success: false, error: error.message || "알 수 없는 오류가 발생했습니다." }
+  }
+}

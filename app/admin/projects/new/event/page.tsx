@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { createEventPage } from "@/app/actions/project-actions"
+import { createClient } from "@supabase/supabase-js"
 
 const CUSTOMER_FIELDS = [
     { key: "name", label: "이름" },
@@ -16,6 +18,18 @@ const CUSTOMER_FIELDS = [
     { key: "people", label: "인원수" },
     { key: "etc", label: "기타 요청사항" },
 ]
+
+// Supabase Storage에 이미지 업로드 후 publicUrl 반환
+async function uploadEventImageToSupabase(file: File): Promise<string> {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+    const fileName = `event-${Date.now()}-${file.name}`
+    const { data, error } = await supabase.storage.from("event-images").upload(fileName, file)
+    if (error) throw new Error(error.message)
+    const { data: publicUrlData } = supabase.storage.from("event-images").getPublicUrl(fileName)
+    return publicUrlData.publicUrl
+}
 
 export default function NewEventPage() {
     const router = useRouter()
@@ -64,12 +78,27 @@ export default function NewEventPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
-        // TODO: 실제 제출 로직 구현
-        setTimeout(() => {
-            alert("이벤트 신청 항목 설정이 완료되었습니다!\n선택된 항목: " + fieldsToAsk.map(k => CUSTOMER_FIELDS.find(f => f.key === k)?.label).join(", "))
-            setIsSubmitting(false)
+        try {
+            let imageUrl = ""
+            if (image) {
+                imageUrl = await uploadEventImageToSupabase(image)
+            }
+            const result = await createEventPage({
+                studio_name: studio.name,
+                studio_location: studio.location,
+                studio_contact: studio.contact,
+                image_url: imageUrl,
+                fields_to_ask: fieldsToAsk,
+                product_list: productList,
+            })
+            if (!result.success) throw new Error(result.error)
+            alert("이벤트 페이지가 성공적으로 생성되었습니다!")
             router.push("/admin/projects/new")
-        }, 1000)
+        } catch (err: any) {
+            alert(`저장 실패: ${err.message}`)
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (

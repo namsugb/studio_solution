@@ -36,9 +36,9 @@ export default function DemoPage() {
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
                                 <CalendarCheck className="h-6 w-6" />
                             </div>
-                            <h3 className="mb-3 text-xl font-bold text-gray-900">실시간 예약 현황</h3>
+                            <h3 className="mb-3 text-xl font-bold text-gray-900">예약 문의 실시간 관리리</h3>
                             <p className="text-gray-600">
-                                고객의 예약신청 내역을 실시간으로 확인하고, 스케줄을 자동으로 정리할 수 있습니다.
+                                홈페이지, 이벤트페이지 등 다양한 채널에서 들어오는 문의와 상담 요청을 pc, 모바일에서 실시간으로 확인할 수 있습니다.
                             </p>
                         </div>
 
@@ -46,9 +46,9 @@ export default function DemoPage() {
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
                                 <ClipboardList className="h-6 w-6" />
                             </div>
-                            <h3 className="mb-3 text-xl font-bold text-gray-900">문의/상담 내역 관리</h3>
+                            <h3 className="mb-3 text-xl font-bold text-gray-900">문의 고객 관리</h3>
                             <p className="text-gray-600">
-                                홈페이지, SNS, 이벤트 등 다양한 채널에서 들어오는 문의와 상담 요청을 한 곳에서 통합 관리합니다.
+                                예약문의를 한 고객에게 카카오톡 템플릿 메시지를 보내 후속관리를 할 수 있습니다.
                             </p>
                         </div>
 
@@ -56,9 +56,9 @@ export default function DemoPage() {
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
                                 <Users className="h-6 w-6" />
                             </div>
-                            <h3 className="mb-3 text-xl font-bold text-gray-900">고객 정보 자동 정리</h3>
+                            <h3 className="mb-3 text-xl font-bold text-gray-900">체계적인 고객 정보 관리</h3>
                             <p className="text-gray-600">
-                                예약, 문의, 이벤트 참여 등 고객별 이력을 자동으로 정리하여 맞춤 소통과 마케팅에 활용할 수 있습니다.
+                                신규문의, 상담중, 예약확정, 촬영완료, 보류 등 고객의 상태를 손쉽게 정리할 수 있습니다.
                             </p>
                         </div>
                     </div>

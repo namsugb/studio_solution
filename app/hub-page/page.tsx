@@ -59,9 +59,9 @@ export default function HubPage() {
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
                 <Instagram className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-bold text-gray-900">네이버 검색순위 상승</h3>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">네이버 플레이스 지수 상승</h3>
               <p className="text-gray-600">
-                네이버 링크들을 노출시켜 홈페이지, 블로그들의 검색 순위를 높이는데 도움이 됩니다.
+                네이버 링크들을 다수 노출시켜 네이버 플레이스 지수를 높이는데 도움이 됩니다.
               </p>
             </div>
           </div>

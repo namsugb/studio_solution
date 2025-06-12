@@ -4,7 +4,7 @@ import { ArrowRight, Check, Smartphone, Users, CalendarCheck, ClipboardList } fr
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-export default function ReservationManagePage() {
+export default function DemoPage() {
     return (
         <div className="flex min-h-screen flex-col">
             {/* Hero Section */}
@@ -111,7 +111,7 @@ export default function ReservationManagePage() {
                                         <span>엑셀 다운로드 및 데이터 백업</span>
                                     </li>
                                 </ul>
-                                <Link href="/#apply">
+                                <Link href="/manage/demo-page">
                                     <Button className="w-full" asChild>
                                         <span>
                                             자세히 보기

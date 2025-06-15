@@ -103,7 +103,10 @@ export default function MainPage() {
                   스튜디오에 최적화된 홈페이지입니다. 브랜드, 서비스, 갤러리, 문의 등 다양한 정보를 한 곳에서 고객에게 효과적으로 전달할 수 있습니다.
                 </p>
                 <div className="mb-4">
-                  <span className="text-2xl font-bold text-gray-900">₩300,000</span>
+                  <div className="mb-2">
+                    <span className="text-xl font-bold text-gray-900 mr-2">₩300,000</span>
+                    <span className="text-xl text-gray-400 line-through">₩600,000</span>
+                  </div>
                 </div>
                 <ul className="mb-6 space-y-2 text-sm text-gray-600">
                   <li className="flex items-center">

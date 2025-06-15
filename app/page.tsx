@@ -109,7 +109,7 @@ export default function Home() {
                 height={300}
                 className="rounded-lg object-cover"
               />
-              <div className="mt-4">
+              <div className="mt-4 flex flex-col items-start">
                 <Button asChild>
                   <Link href="/main-page">
                     자세히 알아보기

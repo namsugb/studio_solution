@@ -15,6 +15,8 @@ import { Progress } from "@/components/ui/progress"
 import { uploadHubFileToSupabase } from "@/lib/hub-image-upload"
 import { compressImage, checkImageSize } from "@/utils/image-compressor"
 import { ImageSizeWarningDialog } from "@/components/image-size-warning-dialog"
+import { LinkRequiredDialog } from "@/components/link-required-dialog"
+import { RequiredFieldDialog } from "@/components/link-required-dialog"
 
 // 링크 정보 타입
 interface LinkInfo {
@@ -84,6 +86,8 @@ export default function NewHubProjectPage() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [hasEnvVars, setHasEnvVars] = useState(false)
   const [isDemo, setIsDemo] = useState(false)
+  const [showRequiredField, setShowRequiredField] = useState(false)
+  const [requiredFieldMessage, setRequiredFieldMessage] = useState({ title: "", description: "" })
 
   // 이미지 압축 관련 상태
   const [largeImages, setLargeImages] = useState<ImageFile[]>([])
@@ -110,6 +114,56 @@ export default function NewHubProjectPage() {
 
   // 다음 단계로 이동
   const nextStep = () => {
+    // 각 단계별 필수 입력값 체크
+    switch (currentStep) {
+      case 1: // 기본 정보
+        if (!projectInfo.studio_name.trim() || !projectInfo.description.trim()) {
+          setRequiredFieldMessage({
+            title: "기본 정보 입력 필요",
+            description: "스튜디오 이름과 소개를 모두 입력해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 2: // 연락처 정보
+        if (!projectInfo.phone.trim() || !projectInfo.email.trim()) {
+          setRequiredFieldMessage({
+            title: "연락처 정보 입력 필요",
+            description: "전화번호와 이메일을 모두 입력해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 3: // 브랜딩
+        if (!projectInfo.primary_color || !projectInfo.secondary_color || !projectInfo.font_preference) {
+          setRequiredFieldMessage({
+            title: "브랜딩 정보 입력 필요",
+            description: "메인 컬러, 서브 컬러, 폰트 선호도를 모두 선택해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 5: // 링크 설정
+        const validLinks = projectInfo.links.filter(link =>
+          link.name.trim() !== "" && link.url.trim() !== ""
+        )
+        if (validLinks.length === 0) {
+          setRequiredFieldMessage({
+            title: "링크 추가 필요",
+            description: "허브 페이지에는 최소 하나 이상의 링크가 필요합니다. 링크를 추가해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+    }
+
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1)
     }
@@ -930,6 +984,14 @@ export default function NewHubProjectPage() {
           totalSize={largeImages.reduce((sum, img) => sum + img.file.size, 0)}
         />
       )}
+
+      {/* 필수 입력값 다이얼로그 */}
+      <RequiredFieldDialog
+        open={showRequiredField}
+        onClose={() => setShowRequiredField(false)}
+        title={requiredFieldMessage.title}
+        description={requiredFieldMessage.description}
+      />
 
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="container mx-auto px-4 max-w-4xl">

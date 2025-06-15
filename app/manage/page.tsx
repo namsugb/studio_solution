@@ -91,7 +91,8 @@ export default function DemoPage() {
                                     고객의 예약신청, 문의, 상담 요청을 한 곳에서 관리하고, 스케줄과 고객정보를 자동으로 정리할 수 있습니다.
                                 </p>
                                 <div className="mb-4">
-                                    <span className="text-2xl font-bold text-gray-900">₩200,000~</span>
+                                    <span className="text-xl font-bold text-gray-900 mr-2">₩200,000</span>
+                                    <span className="text-xl text-gray-400 line-through">₩400,000</span>
                                 </div>
                                 <ul className="mb-6 space-y-2 text-sm text-gray-600">
                                     <li className="flex items-center">

@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Progress } from "@/components/ui/progress"
 import { ImageSizeWarningDialog } from "@/components/image-size-warning-dialog"
+import { RequiredFieldDialog } from "@/components/link-required-dialog"
 
 interface ImageFile {
   id: string
@@ -109,6 +110,8 @@ export default function NewWebsiteProjectPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDemo, setIsDemo] = useState(!process.env.NEXT_PUBLIC_SUPABASE_URL)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [showRequiredField, setShowRequiredField] = useState(false)
+  const [requiredFieldMessage, setRequiredFieldMessage] = useState({ title: "", description: "" })
 
   const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false)
   const [largeImages, setLargeImages] = useState<
@@ -122,6 +125,53 @@ export default function NewWebsiteProjectPage() {
   const progress = (currentStep / steps.length) * 100
 
   const nextStep = () => {
+    // 각 단계별 필수 입력값 체크
+    switch (currentStep) {
+      case 1: // 기본 정보
+        if (!projectInfo.studio_name.trim() || !projectInfo.description.trim()) {
+          setRequiredFieldMessage({
+            title: "기본 정보 입력 필요",
+            description: "스튜디오 이름과 소개를 모두 입력해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 2: // 연락처 정보
+        if (!projectInfo.phone.trim() || !projectInfo.email.trim()) {
+          setRequiredFieldMessage({
+            title: "연락처 정보 입력 필요",
+            description: "전화번호와 이메일을 모두 입력해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 3: // 브랜딩
+        if (!projectInfo.primary_color || !projectInfo.secondary_color || !projectInfo.font_preference) {
+          setRequiredFieldMessage({
+            title: "브랜딩 정보 입력 필요",
+            description: "배경 컬러, 포인트 컬러, 폰트 스타일을 모두 선택해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+
+      case 5: // 카테고리 설정
+        if (projectInfo.gallery_categories.length === 0 || projectInfo.product_categories.length === 0) {
+          setRequiredFieldMessage({
+            title: "카테고리 설정 필요",
+            description: "갤러리 카테고리와 상품 카테고리를 각각 하나 이상 추가해주세요."
+          })
+          setShowRequiredField(true)
+          return
+        }
+        break
+    }
+
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1)
     }
@@ -1009,6 +1059,15 @@ export default function NewWebsiteProjectPage() {
           totalSize={largeImages.reduce((sum, img) => sum + img.file.size, 0)}
         />
       )}
+
+      {/* 필수 입력값 다이얼로그 */}
+      <RequiredFieldDialog
+        open={showRequiredField}
+        onClose={() => setShowRequiredField(false)}
+        title={requiredFieldMessage.title}
+        description={requiredFieldMessage.description}
+      />
+
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="mb-8">

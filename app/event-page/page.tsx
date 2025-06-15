@@ -90,9 +90,6 @@ export default function EventPage() {
                                 <p className="mb-4 text-gray-600">
                                     원하는 이벤트 상품을 선택해 간단한 폼으로 예약 신청을 받고, 신청 내역을 실시간으로 관리할 수 있습니다.
                                 </p>
-                                <div className="mb-4">
-                                    <span className="text-2xl font-bold text-gray-900">₩100,000~</span>
-                                </div>
                                 <ul className="mb-6 space-y-2 text-sm text-gray-600">
                                     <li className="flex items-center">
                                         <Check className="mr-2 h-4 w-4 text-rose-500" />

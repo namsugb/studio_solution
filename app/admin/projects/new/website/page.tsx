@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, ArrowRight, Check, X, Upload } from "lucide-react"
@@ -16,6 +16,12 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Progress } from "@/components/ui/progress"
 import { ImageSizeWarningDialog } from "@/components/image-size-warning-dialog"
 import { RequiredFieldDialog } from "@/components/link-required-dialog"
+import { compressImages } from "@/utils/image-compressor"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { supabaseServer } from "@/lib/supabase/server"
+import { supabaseClient } from "@/lib/supabase/client"
 
 interface ImageFile {
   id: string
@@ -114,12 +120,9 @@ export default function NewWebsiteProjectPage() {
   const [requiredFieldMessage, setRequiredFieldMessage] = useState({ title: "", description: "" })
 
   const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false)
-  const [largeImages, setLargeImages] = useState<
-    {
-      file: File
-      type: "logo" | "slider" | "product" | "gallery"
-    }[]
-  >([])
+  const [largeImages, setLargeImages] = useState<{ file: File; type: "logo" | "slider" | "product" | "gallery" }[]>([])
+  const [isCompressing, setIsCompressing] = useState(false)
+  const [compressionProgress, setCompressionProgress] = useState(0)
   const MAX_IMAGE_SIZE_MB = 2
 
   const progress = (currentStep / steps.length) * 100
@@ -236,7 +239,7 @@ export default function NewWebsiteProjectPage() {
     }
   }
 
-  const handleImageUpload = (
+  const handleImageUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
     type: "logo" | "slider" | "product" | "gallery",
   ) => {
@@ -290,16 +293,31 @@ export default function NewWebsiteProjectPage() {
     reader.readAsDataURL(file)
   }
 
-  const handleConfirmLargeImages = (
+  const handleConfirmLargeImages = async (
     processedFiles: { file: File; type: "logo" | "slider" | "product" | "gallery" }[],
   ) => {
-    // 처리된 모든 파일들을 프로젝트에 추가
-    processedFiles.forEach(({ file, type }) => {
-      addImageToProject(file, type)
-    })
+    setIsCompressing(true)
+    setCompressionProgress(0)
 
-    setIsWarningDialogOpen(false)
-    setLargeImages([])
+    try {
+      // 모든 파일 압축
+      const filesToCompress = processedFiles.map(pf => pf.file)
+      const compressedFiles = await compressImages(filesToCompress)
+
+      // 압축된 파일들을 프로젝트에 추가
+      compressedFiles.forEach((compressedFile: File, index: number) => {
+        addImageToProject(compressedFile, processedFiles[index].type)
+      })
+
+      setIsWarningDialogOpen(false)
+      setLargeImages([])
+    } catch (error) {
+      console.error("이미지 압축 실패:", error)
+      alert("일부 이미지 압축에 실패했습니다. 다른 이미지를 선택해주세요.")
+    } finally {
+      setIsCompressing(false)
+      setCompressionProgress(0)
+    }
   }
 
   const handleCancelLargeImages = () => {
@@ -308,28 +326,40 @@ export default function NewWebsiteProjectPage() {
   }
 
   const uploadImageToServer = async (image: ImageFile, projectId: string) => {
-    try {
-      const formData = new FormData()
-      formData.append("file", image.file)
-      formData.append("projectId", projectId)
-      formData.append("imageType", image.type)
+    const maxRetries = 3
+    let lastError: any = null
 
-      const response = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      })
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        const formData = new FormData()
+        formData.append("file", image.file)
+        formData.append("projectId", projectId)
+        formData.append("imageType", image.type)
 
-      const result = await response.json()
+        const response = await fetch("/api/upload-image", {
+          method: "POST",
+          body: formData,
+        })
 
-      if (!result.success) {
-        throw new Error(result.error)
+        const result = await response.json()
+
+        if (!result.success) {
+          throw new Error(result.error)
+        }
+
+        return result.data
+      } catch (error: any) {
+        console.error(`이미지 업로드 시도 ${i + 1}/${maxRetries} 실패:`, error)
+        lastError = error
+
+        // 마지막 시도가 아니면 잠시 대기 후 재시도
+        if (i < maxRetries - 1) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)))
+        }
       }
-
-      return result.data
-    } catch (error: any) {
-      console.error("이미지 업로드 실패:", error)
-      throw error
     }
+
+    throw lastError
   }
 
   const uploadImages = async (projectId: string) => {
@@ -338,6 +368,7 @@ export default function NewWebsiteProjectPage() {
     const totalImages = projectInfo.images.length
     let uploadedCount = 0
     let failedCount = 0
+    let failedImages: string[] = []
 
     setProjectInfo((prev) => ({
       ...prev,
@@ -374,6 +405,7 @@ export default function NewWebsiteProjectPage() {
       } catch (error: any) {
         console.error(`이미지 업로드 실패 (${image.file.name}):`, error)
         failedCount++
+        failedImages.push(image.file.name)
 
         setProjectInfo((prev) => ({
           ...prev,
@@ -390,7 +422,10 @@ export default function NewWebsiteProjectPage() {
       const results = await Promise.all(uploadPromises)
 
       if (failedCount > 0) {
-        alert(`${totalImages}개 중 ${failedCount}개 이미지 업로드에 실패했습니다. 계속 진행하시겠습니까?`)
+        const failedFilesList = failedImages.join("\n- ")
+        alert(
+          `${totalImages}개 중 ${failedCount}개 이미지 업로드에 실패했습니다.\n\n실패한 파일들:\n- ${failedFilesList}\n\n계속 진행하시겠습니까?`
+        )
       }
 
       return results.filter(Boolean)
@@ -1053,8 +1088,8 @@ export default function NewWebsiteProjectPage() {
           onClose={handleCancelLargeImages}
           onCompress={() => handleConfirmLargeImages(largeImages)}
           onUseOriginal={handleCancelLargeImages}
-          isCompressing={false}
-          compressionProgress={0}
+          isCompressing={isCompressing}
+          compressionProgress={compressionProgress}
           imageCount={largeImages.length}
           totalSize={largeImages.reduce((sum, img) => sum + img.file.size, 0)}
         />

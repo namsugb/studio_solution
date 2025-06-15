@@ -1,11 +1,18 @@
+import imageCompression from "browser-image-compression"
+
+const MAX_IMAGE_SIZE_MB = 2
+const MAX_WIDTH = 1920
+const MAX_HEIGHT = 1080
+const QUALITY = 0.7
+
 /**
  * 이미지 파일 크기가 2MB를 초과하는지 확인하는 함수
  * @param file 확인할 이미지 파일
  * @returns 2MB 초과 여부 (true: 초과, false: 이하)
  */
 export async function checkImageSize(file: File): Promise<boolean> {
-  const MAX_SIZE = 2 * 1024 * 1024 // 2MB
-  return file.size > MAX_SIZE
+  const fileSizeInMB = file.size / (1024 * 1024)
+  return fileSizeInMB > MAX_IMAGE_SIZE_MB
 }
 
 /**
@@ -16,75 +23,61 @@ export async function checkImageSize(file: File): Promise<boolean> {
  * @param quality 초기 품질 (기본값: 0.8)
  * @returns 압축된 이미지 파일
  */
-export async function compressImage(file: File, maxWidth = 1920, maxHeight = 1080, quality = 0.8): Promise<File> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = (event) => {
-      const img = new Image()
-      img.src = event.target?.result as string
-
-      img.onload = () => {
-        // 이미지 크기 계산
-        let width = img.width
-        let height = img.height
-
-        // 이미지가 최대 크기보다 큰 경우 비율 유지하며 리사이징
-        if (width > maxWidth || height > maxHeight) {
-          const ratio = Math.min(maxWidth / width, maxHeight / height)
-          width = Math.floor(width * ratio)
-          height = Math.floor(height * ratio)
-        }
-
-        // 캔버스 생성 및 이미지 그리기
-        const canvas = document.createElement("canvas")
-        canvas.width = width
-        canvas.height = height
-        const ctx = canvas.getContext("2d")
-        ctx?.drawImage(img, 0, 0, width, height)
-
-        // 압축 및 변환
-        const compressAndConvert = (currentQuality: number) => {
-          // 이미지 압축
-          const dataUrl = canvas.toDataURL(file.type, currentQuality)
-
-          // Base64 데이터를 Blob으로 변환
-          const byteString = atob(dataUrl.split(",")[1])
-          const mimeType = dataUrl.split(",")[0].split(":")[1].split(";")[0]
-          const ab = new ArrayBuffer(byteString.length)
-          const ia = new Uint8Array(ab)
-
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i)
-          }
-
-          const blob = new Blob([ab], { type: mimeType })
-
-          // 압축된 파일이 여전히 2MB보다 크면 품질을 더 낮춰서 재시도
-          if (blob.size > 2 * 1024 * 1024 && currentQuality > 0.3) {
-            compressAndConvert(currentQuality - 0.1)
-          } else {
-            // 최종 압축 파일 생성
-            const compressedFile = new File([blob], file.name, {
-              type: file.type,
-              lastModified: Date.now(),
-            })
-
-            resolve(compressedFile)
-          }
-        }
-
-        // 압축 시작
-        compressAndConvert(quality)
-      }
-
-      img.onerror = (error) => {
-        reject(error)
-      }
+export async function compressImage(file: File): Promise<File> {
+  try {
+    // 이미지 크기 체크
+    const fileSizeInMB = file.size / (1024 * 1024)
+    if (fileSizeInMB <= MAX_IMAGE_SIZE_MB) {
+      return file
     }
 
-    reader.onerror = (error) => {
-      reject(error)
+    // 이미지 압축 옵션
+    const options = {
+      maxSizeMB: MAX_IMAGE_SIZE_MB,
+      maxWidthOrHeight: Math.max(MAX_WIDTH, MAX_HEIGHT),
+      useWebWorker: true,
+      quality: QUALITY,
+      initialQuality: QUALITY,
+      alwaysKeepResolution: true,
+      fileType: file.type,
     }
-  })
+
+    // 압축 시도
+    const compressedFile = await imageCompression(file, options)
+
+    // 압축 후 크기 체크
+    const compressedSizeInMB = compressedFile.size / (1024 * 1024)
+    if (compressedSizeInMB > MAX_IMAGE_SIZE_MB) {
+      // 여전히 크기가 크다면 더 강력한 압축 시도
+      const strongerOptions = {
+        ...options,
+        quality: 0.5,
+        maxWidthOrHeight: Math.min(MAX_WIDTH, MAX_HEIGHT),
+      }
+      return await imageCompression(file, strongerOptions)
+    }
+
+    return compressedFile
+  } catch (error) {
+    console.error("이미지 압축 실패:", error)
+    throw new Error("이미지 압축에 실패했습니다.")
+  }
+}
+
+export async function compressImages(files: File[]): Promise<File[]> {
+  const compressedFiles: File[] = []
+  let totalSize = 0
+
+  for (const file of files) {
+    try {
+      const compressedFile = await compressImage(file)
+      compressedFiles.push(compressedFile)
+      totalSize += compressedFile.size
+    } catch (error) {
+      console.error(`파일 압축 실패 (${file.name}):`, error)
+      throw error
+    }
+  }
+
+  return compressedFiles
 }

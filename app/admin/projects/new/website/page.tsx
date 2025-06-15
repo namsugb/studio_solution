@@ -459,7 +459,7 @@ export default function NewWebsiteProjectPage() {
       }
 
       alert("메인 홈페이지 프로젝트가 성공적으로 생성되었습니다!")
-      router.push("/admin/projects")
+      router.push("/admin/projects/new")
     } catch (error: any) {
       console.error("프로젝트 생성 실패:", error)
       alert(`프로젝트 생성에 실패했습니다: ${error.message || "알 수 없는 오류"}`)

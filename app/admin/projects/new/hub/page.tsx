@@ -77,6 +77,17 @@ const steps = [
   { id: 7, title: "완료", description: "입력한 정보를 확인하고 제출해주세요" },
 ]
 
+async function uploadWithRetry(image: ImageFile, projectId: string, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await uploadImageToServer(image, projectId)
+    } catch (error) {
+      if (i === maxRetries - 1) throw error
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))) // 지수 백오프
+    }
+  }
+}
+
 export default function NewHubProjectPage() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
@@ -417,66 +428,40 @@ export default function NewHubProjectPage() {
       console.log("이미지 개수:", projectInfo.images.length)
       console.log("링크 개수:", projectInfo.links.length)
 
+      if (isDemo) {
+        console.log("데모 모드: 허브 페이지 프로젝트 생성 데이터", projectData)
+        alert("데모 모드: 허브 페이지 프로젝트가 성공적으로 생성되었습니다! (실제 데이터베이스에 저장되지 않음)")
+        router.push("/admin/projects/new")
+        return
+      }
 
-      // 허브 프로젝트 생성을 위한 서버 액션 사용
-      console.log("서버 액션 import 시작...")
-      const { createHubProject, createHubProjectImages, createHubProjectLinks } = await import(
-        "@/app/actions/project-actions"
-      )
-      console.log("서버 액션 import 완료")
-
-      console.log("허브 프로젝트 생성 호출...")
+      const { createHubProject, createProjectImages } = await import("@/app/actions/project-actions")
       const result = await createHubProject(projectData)
-      console.log("허브 프로젝트 생성 결과:", result)
 
       if (!result.success) {
-        throw new Error(result.error || "프로젝트 생성에 실패했습니다.")
+        throw new Error(result.error)
       }
 
-      const projectId = result.data[0].id
-      console.log("생성된 프로젝트 ID:", projectId)
+      const projectId = result.data?.[0]?.id
+      if (!projectId) throw new Error("프로젝트 ID를 가져올 수 없습니다.")
 
-      // 이미지 업로드 및 데이터베이스 저장
-      if (hasEnvVars && projectInfo.images.length > 0) {
-        console.log("이미지 업로드 시작...")
-        const imageData = await uploadImages(projectId)
-        console.log("업로드된 이미지 데이터:", imageData)
+      if (projectInfo.images.length > 0) {
+        try {
+          const imageData = await uploadImages(projectId)
 
-        if (imageData.length > 0) {
-          console.log("이미지 메타데이터 저장 시작...")
-          const imageResult = await createHubProjectImages(imageData)
-          console.log("이미지 메타데이터 저장 결과:", imageResult)
+          if (imageData.length > 0) {
+            const imageResult = await createProjectImages(imageData)
 
-          if (!imageResult.success) {
-            console.error("이미지 저장 실패:", imageResult.error)
-            setSubmitError(`이미지 저장 실패: ${imageResult.error}`)
+            if (!imageResult.success) {
+              console.error("이미지 저장 실패:", imageResult.error)
+            }
           }
+        } catch (uploadError) {
+          console.error("이미지 업로드 중 오류:", uploadError)
+          alert("일부 이미지 업로드에 실패했습니다. 프로젝트는 생성되었습니다.")
         }
       }
 
-      // 링크 데이터 처리
-      const validLinks = projectInfo.links.filter((link) => link.name.trim() && link.url.trim())
-      if (validLinks.length > 0) {
-        const linkData = validLinks.map((link, index) => ({
-          project_id: projectId,
-          name: link.name,
-          url: link.url,
-          icon: link.icon || null,
-          category: link.category,
-          sort_order: index,
-        }))
-
-        console.log("링크 데이터 저장 시작:", linkData)
-        const linkResult = await createHubProjectLinks(linkData)
-        console.log("링크 데이터 저장 결과:", linkResult)
-
-        if (!linkResult.success) {
-          console.error("링크 저장 실패:", linkResult.error)
-          setSubmitError(`링크 저장 실패: ${linkResult.error}`)
-        }
-      }
-
-      console.log("=== 허브 프로젝트 생성 완료 ===")
       alert("허브 페이지 프로젝트가 성공적으로 생성되었습니다!")
       router.push("/admin/projects/new")
     } catch (error: any) {

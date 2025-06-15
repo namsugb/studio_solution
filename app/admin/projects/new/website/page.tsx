@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { supabaseServer } from "@/lib/supabase/server"
 import { supabaseClient } from "@/lib/supabase/client"
+import { createClient } from "@supabase/supabase-js"
 
 interface ImageFile {
   id: string
@@ -331,23 +332,35 @@ export default function NewWebsiteProjectPage() {
 
     for (let i = 0; i < maxRetries; i++) {
       try {
-        const formData = new FormData()
-        formData.append("file", image.file)
-        formData.append("projectId", projectId)
-        formData.append("imageType", image.type)
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-        const response = await fetch("/api/upload-image", {
-          method: "POST",
-          body: formData,
-        })
-
-        const result = await response.json()
-
-        if (!result.success) {
-          throw new Error(result.error)
+        if (!supabaseUrl || !supabaseAnonKey) {
+          throw new Error("Supabase 환경 변수가 설정되지 않았습니다.")
         }
 
-        return result.data
+        const supabase = createClient(supabaseUrl, supabaseAnonKey)
+        const fileExt = image.file.name.split(".").pop()
+        const fileName = `${Date.now()}.${fileExt}`
+        const filePath = `projects/${projectId}/${image.type}/${fileName}`
+
+        // Supabase Storage에 파일 업로드
+        const { data, error } = await supabase.storage.from("project-images").upload(filePath, image.file, {
+          cacheControl: "3600",
+          upsert: false,
+        })
+
+        if (error) {
+          throw new Error(error.message)
+        }
+
+        // 업로드된 파일의 공개 URL 가져오기
+        const { data: publicUrlData } = supabase.storage.from("project-images").getPublicUrl(filePath)
+
+        return {
+          publicUrl: publicUrlData.publicUrl,
+          fileName: fileName,
+        }
       } catch (error: any) {
         console.error(`이미지 업로드 시도 ${i + 1}/${maxRetries} 실패:`, error)
         lastError = error
